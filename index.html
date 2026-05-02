@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceTranscribe - Транскрибация голоса в текст</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>VoiceTranscribe</h1>
+            <p class="subtitle">Транскрибация голоса в текст</p>
+        </header>
+
+        <main>
+            <!-- Выбор режима работы -->
+            <div class="mode-selector">
+                <label class="mode-label">Режим работы:</label>
+                <div class="mode-buttons">
+                    <button id="modeLive" class="mode-btn active" data-mode="live">
+                        <span class="icon">🎤</span>
+                        Прямая запись
+                    </button>
+                    <button id="modeFile" class="mode-btn" data-mode="file">
+                        <span class="icon">📁</span>
+                        Загрузка файла
+                    </button>
+                </div>
+            </div>
+
+            <!-- Выбор языка -->
+            <div class="language-selector">
+                <label for="languageSelect" class="select-label">Язык распознавания:</label>
+                <select id="languageSelect" class="language-select">
+                    <option value="ru-RU" selected>Русский</option>
+                    <option value="en-US">English</option>
+                    <option value="de-DE">Deutsch</option>
+                    <option value="es-ES">Español</option>
+                    <option value="fr-FR">Français</option>
+                </select>
+            </div>
+
+            <!-- Секция прямой записи -->
+            <div id="liveSection" class="recording-section">
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-primary">
+                        <span class="icon">🎤</span>
+                        Начать запись
+                    </button>
+                    <button id="stopBtn" class="btn btn-secondary" disabled>
+                        <span class="icon">⏹</span>
+                        Остановить
+                    </button>
+                </div>
+
+                <div class="status" id="status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Готов к записи</span>
+                </div>
+            </div>
+
+            <!-- Секция загрузки файлов -->
+            <div id="fileSection" class="file-section" style="display: none;">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".mp3,.wav,.ogg,.webm,.m4a,.aac,.flac,.wma,.aiff" hidden>
+                    <div class="upload-content">
+                        <span class="upload-icon">📤</span>
+                        <p class="upload-text">Перетащите аудиофайл сюда или кликните для выбора</p>
+                        <p class="upload-formats">Поддерживаемые форматы: MP3, WAV, OGG, WebM, M4A, AAC, FLAC, WMA, AIFF</p>
+                    </div>
+                </div>
+                
+                <div id="fileInfo" class="file-info" style="display: none;">
+                    <div class="file-details">
+                        <span class="file-icon">🎵</span>
+                        <div class="file-meta">
+                            <span class="file-name" id="fileName"></span>
+                            <span class="file-size" id="fileSize"></span>
+                        </div>
+                    </div>
+                    <button id="processFileBtn" class="btn btn-primary">
+                        <span class="icon">⚙️</span>
+                        Транскрибировать
+                    </button>
+                    <button id="cancelFileBtn" class="btn btn-outline btn-small">
+                        Отмена
+                    </button>
+                </div>
+
+                <div id="uploadProgress" class="upload-progress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">Обработка...</span>
+                </div>
+            </div>
+
+            <div class="transcript-container">
+                <textarea 
+                    id="transcript" 
+                    placeholder="Здесь появится ваш текст..."
+                    readonly
+                ></textarea>
+                
+                <div class="actions">
+                    <button id="copyBtn" class="btn btn-small">
+                        <span class="icon">📋</span>
+                        Копировать
+                    </button>
+                    <button id="clearBtn" class="btn btn-small btn-outline">
+                        <span class="icon">🗑</span>
+                        Очистить
+                    </button>
+                </div>
+            </div>
+
+            <div class="export-section">
+                <h3>Экспорт</h3>
+                <div class="export-buttons">
+                    <button id="exportTxt" class="btn btn-export">TXT</button>
+                    <button id="exportDocx" class="btn btn-export">DOCX</button>
+                    <button id="exportPdf" class="btn btn-export">PDF</button>
+                    <button id="exportOdt" class="btn btn-export">ODT</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Используется Web Speech API • Работает в браузере</p>
+        </footer>
+    </div>
+
+    <!-- Библиотеки для экспорта -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
