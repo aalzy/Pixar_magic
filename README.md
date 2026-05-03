@@ -1,1 +1,1 @@
-# Pixar_style_magic
+# Pixar_magic
